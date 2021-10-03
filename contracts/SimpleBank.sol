@@ -29,14 +29,14 @@ contract SimpleBank {
      */
     
     // Add an argument for this event, an accountAddress
-    event LogEnrolled(address _accountAddress);
+    event LogEnrolled(address accountAddress);
 
     // Add 2 arguments for this event, an accountAddress and an amount
-    event LogDepositMade(address _accountAddress, uint amount);
+    event LogDepositMade(address indexed accountAddress, uint amount);
 
     // Create an event called LogWithdrawal
     // Hint: it should take 3 arguments: an accountAddress, withdrawAmount and a newBalance 
-    event LogWithdrawal(address _accountAddress, uint withdrawAmount, uint newBalance);
+    event LogWithdrawal(address indexed accountAddress, uint withdrawAmount, uint newBalance);
 
     /* Functions
      */
@@ -76,7 +76,7 @@ contract SimpleBank {
       // 1. Add the appropriate keyword so that this function can receive ether
 
       // 2. Users should be enrolled before they can make deposits
-      enroll();
+      require( enrolled[ msg.sender ] == true, "User should be enrolled before they can make deposits" );
       // 3. Add the amount to the user's balance. Hint: the amount can be
       //    accessed from of the global variable `msg`
       balances[ msg.sender ] += msg.value;
